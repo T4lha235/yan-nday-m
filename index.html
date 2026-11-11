@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yanındayım</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#e8ecd2; --bg2:#c9d4a8; --ink:#2b3822; --soft:#56673f; --card:rgba(255,255,255,.5);
+  --line:rgba(43,56,34,.16); --glow:#8c9a3c; --moon:#fbf6d2; --star:rgba(70,90,40,.35);
+  --hand:'Caveat','Segoe Script','Bradley Hand',cursive; --body:'Nunito','Segoe UI',system-ui,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg1:#1b2315; --bg2:#2f3b21; --ink:#eef0dc; --soft:#b5c096; --card:rgba(255,255,255,.07);
+    --line:rgba(255,255,255,.14); --glow:#c7d27a; --moon:#f6f2c6; --star:rgba(240,245,210,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg1:#1b2315; --bg2:#2f3b21; --ink:#eef0dc; --soft:#b5c096; --card:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.14); --glow:#c7d27a; --moon:#f6f2c6; --star:rgba(240,245,210,.9);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;min-height:100%;font-family:var(--body);color:var(--ink);line-height:1.7;font-size:17px;
+  background:linear-gradient(180deg,var(--bg1),var(--bg2));background-attachment:fixed}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 20px 80px}
+section{padding:56px 0 8px}
+h1,h2{font-family:var(--hand);font-weight:700;line-height:1.1;margin:0 0 14px}
+h1{font-size:clamp(44px,11vw,72px)}
+h2{font-size:clamp(34px,8vw,46px)}
+p{margin:0 0 14px;max-width:60ch}
+.soft{color:var(--soft)}
+.hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center}
+.hero .hi{font-family:var(--hand);font-size:26px;color:var(--glow);margin-bottom:6px}
+.scroll{margin-top:28px;color:var(--soft);font-size:15px}
+.theme{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:5;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font:inherit;font-size:14px;cursor:pointer;backdrop-filter:blur(8px)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:12px 26px;backdrop-filter:blur(8px);transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+
+/* nefes */
+.breath{display:flex;flex-direction:column;align-items:center;gap:22px;margin-top:26px}
+.orb{width:170px;height:170px;border-radius:50%;display:grid;place-items:center;text-align:center;font-family:var(--hand);font-size:30px;
+  background:radial-gradient(circle at 35% 30%,#fff,var(--moon) 45%,var(--glow) 140%);color:#34421f;
+  box-shadow:0 0 60px 10px color-mix(in srgb,var(--glow) 55%,transparent);transform:scale(.7);transition:transform 4s ease-in-out}
+.orb.in{transform:scale(1.15);transition-duration:4s}
+.orb.hold{transform:scale(1.15);transition-duration:.3s}
+.orb.out{transform:scale(.7);transition-duration:6s}
+
+/* eller */
+.hands{position:relative;height:190px;margin:26px 0 10px;border:1px solid var(--line);border-radius:28px;background:var(--card);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.dot{position:absolute;top:50%;width:46px;height:46px;border-radius:50%;margin:-23px 0 0 -23px;
+  background:radial-gradient(circle at 35% 30%,#fff,var(--c));box-shadow:0 0 30px 8px var(--c)}
+#you{--c:#9fcf86;left:20%}
+#me{--c:#e8d27a;left:80%}
+.warm{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--glow) 60%,transparent),transparent 60%);opacity:0}
+.hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:15px;color:var(--soft)}
+.said{min-height:3.2em;font-family:var(--hand);font-size:28px;line-height:1.25}
+
+/* zarflar */
+.env{display:grid;gap:12px;margin-top:20px}
+details{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:0 20px;backdrop-filter:blur(8px)}
+summary{cursor:pointer;list-style:none;padding:16px 0;font-family:var(--hand);font-size:28px;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"✉";font-size:22px;transition:transform .3s}
+details[open] summary::after{content:"♡";transform:scale(1.2);color:var(--glow)}
+details div{padding:0 0 12px;animation:open .5s ease}
+@keyframes open{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* liste */
+.list{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
+.list label{display:flex;gap:14px;align-items:center;padding:14px 18px;border:1px solid var(--line);border-radius:18px;background:var(--card);cursor:pointer;transition:opacity .3s}
+.list input{width:22px;height:22px;accent-color:#7f9a3a;flex:none}
+.list input:checked+span{text-decoration:line-through;opacity:.55}
+#done{font-family:var(--hand);font-size:30px;margin-top:16px;min-height:1.4em;color:var(--glow)}
+
+/* mektup */
+.letter{margin-top:20px;padding:30px 26px;border-radius:26px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(8px)}
+.letter p{font-family:var(--hand);font-size:27px;line-height:1.4;max-width:none}
+.sign{text-align:right;color:var(--glow)}
+footer{text-align:center;padding:70px 0 20px;font-family:var(--hand);font-size:30px}
+.heart{display:inline-block;animation:beat 2.4s ease-in-out infinite;color:var(--glow)}
+@keyframes beat{0%,100%{transform:scale(1)}40%{transform:scale(1.25)}60%{transform:scale(1.05)}}
+.fade{animation:enter 1.6s ease both}
+@keyframes enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}html{scroll-behavior:auto}}
+.poem{margin-top:20px;padding:28px 26px;border-radius:26px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(8px);font-family:var(--hand);font-size:28px;line-height:1.4}
+.poem p{margin:0 0 20px;max-width:none}.poem .by{font-size:22px;color:var(--soft);margin:0;text-align:right}
+.pull{display:grid;gap:18px;justify-items:start;margin-top:22px}
+.note{font-family:var(--hand);font-size:32px;line-height:1.25;min-height:3.8em;padding:22px 24px;width:100%;border:1px dashed var(--line);border-radius:22px;background:var(--card)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.clock{font-family:var(--hand);font-size:64px;line-height:1}
+.pressed{background:color-mix(in srgb,var(--glow) 35%,transparent)}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<button class="theme" id="theme" type="button" aria-label="Temayı değiştir">☾ / ☀</button>
+
+<main>
+  <section class="hero fade">
+    <div class="hi" id="greet">Merhaba</div>
+    <h1>Biliyorum, çok yoruldun.</h1>
+    <p class="soft">Bu sayfa sadece senin için. Hiçbir şey yapman, kimseye cevap vermen, güçlü görünmen gerekmiyor. İstersen sadece aşağı kaydır, ben yanındayım.</p>
+    <div class="scroll">↓ yavaşça</div>
+  </section>
+
+  <section>
+    <h2>Önce bir nefes alalım</h2>
+    <p class="soft">Ekrandaki ışıkla birlikte. Büyürken nefes al, bir an bekle, küçülürken yavaşça ver. Ben de seninle alıyorum.</p>
+    <div class="breath">
+      <div class="orb" id="orb" role="img" aria-label="Nefes ışığı"><span id="orbText">hazır mısın?</span></div>
+      <button class="btn" id="breathBtn" type="button">Başlayalım</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Elini uzat</h2>
+    <p class="soft">Yeşil ışık sensin, altın ışık benim. Ekrana basılı tut; biz biraz yaklaşalım.</p>
+    <div class="hands" id="hands" tabindex="0" role="button" aria-label="Basılı tut, ışıklar yaklaşsın">
+      <div class="warm" id="warm"></div>
+      <div class="dot" id="you"></div>
+      <div class="dot" id="me"></div>
+      <div class="hint" id="hint">basılı tut (ya da boşluk tuşu)</div>
+    </div>
+    <div class="said" id="said" aria-live="polite"></div>
+  </section>
+
+  <section>
+    <h2>Ne zaman açacağını sen seç</h2>
+    <p class="soft">Her zarfı sırası geldiğinde aç. Acelesi yok.</p>
+    <div class="env">
+      <details>
+        <summary>Her şey üst üste geldiğinde</summary>
+        <div><p>Hepsini bir anda çözmek zorunda değilsin. Bugün sadece bir sonraki küçük şeyi yap, gerisi yarının. Sen kendi sınırlarını bilen, çok yol gelmiş biri olarak yeterlisin.</p><p>Yük ağırsa biraz da bana ver. Paylaşılınca hafifler, hep öyle olur.</p></div>
+      </details>
+      <details>
+        <summary>Kendini yetersiz hissettiğinde</summary>
+        <div><p>Yorgunluk insana yalan söyler. “Yetmiyorum” diyen ses aslında “çok uğraştım” demek istiyor. Ben senin ne kadar çabaladığını görüyorum, hem de her gün.</p></div>
+      </details>
+      <details>
+        <summary>Uyuyamadığında</summary>
+        <div><p>Telefonu biraz kıs, omuzlarını bırak. Yarın için yapılacaklar zaten sabah da orada olacak. Şimdi sadece dinlenme zamanı.</p><p>Gözlerini kapat; ben de aynı gökyüzünün altında seni düşünüyorum.</p></div>
+      </details>
+      <details>
+        <summary>Beni özlediğinde</summary>
+        <div><p>Ben de seni özlüyorum. Çok. Mesafe ne kadar olursa olsun, aklımın ilk durağı hep sensin. Bana hemen yaz ya da ara, ne zaman olursa.</p></div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <h2>Bugün sadece bunlar</h2>
+    <p class="soft">Başka bir şey beklemiyorum senden. Yaptıklarını işaretle.</p>
+    <ul class="list" id="list">
+      <li><label><input type="checkbox"><span>Bir bardak su iç</span></label></li>
+      <li><label><input type="checkbox"><span>Biraz bir şey ye, küçük de olsa</span></label></li>
+      <li><label><input type="checkbox"><span>Omuzlarını gevşet, derin bir nefes ver</span></label></li>
+      <li><label><input type="checkbox"><span>Kendine “yeterince iyi yaptım” de</span></label></li>
+    </ul>
+    <div id="done" aria-live="polite"></div>
+  </section>
+
+  <section>
+    <h2>Bir not çek</h2>
+    <p class="soft">Aklımdan geçenlerden biri sana gelsin. İstediğin kadar çek.</p>
+    <div class="pull">
+      <div class="note" id="note" aria-live="polite">Hazır olunca düğmeye bas.</div>
+      <button class="btn" id="noteBtn" type="button">Bir not ver bana</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Yağmur sesi, biraz mola</h2>
+    <p class="soft">Yağmuru aç, telefonu bırak, gözlerini kapat. Beş dakikalık bir sessizlik kendine ayır.</p>
+    <div class="row">
+      <button class="btn" id="rainBtn" type="button" aria-pressed="false">Yağmuru aç</button>
+      <button class="btn" id="timerBtn" type="button">5 dakika mola</button>
+      <span class="clock" id="clock" aria-live="off">5:00</span>
+    </div>
+    <p class="soft" id="timerMsg" style="margin-top:14px"></p>
+  </section>
+
+  <section>
+    <h2>Yorgun bir akşam için</h2>
+    <div class="poem">
+      <p>Gün ağır bir çanta gibi omzunda,<br>bırak, yere koy, kimse bakmıyor.<br>Pencerede yeşil bir akşam var,<br>içeri girmek için seni bekliyor.</p>
+      <p>Bugün yetişemediklerin yarına kalsın,<br>yarın da biraz yavaş gelsin.<br>Sen sadece bir çay kadar sıcak ol,<br>bir battaniye kadar sakin.</p>
+      <p>Ben uzaktan da olsam yanındayım:<br>aynı ay, aynı sessizlik,<br>aynı nefesin içinde.<br>Dinlen, çok yoruldun.</p>
+      <p class="by">senin için yazdım</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sana kısa bir mektup</h2>
+    <div class="letter">
+      <p>Canım,</p>
+      <p>Yorgun olduğunu bilmek içimi sızlatıyor, çünkü senin için elimden gelenin hep fazlasını yapmak istiyorum. Şu an yanında olamıyorsam bile bu sayfa küçük bir ışık gibi dursun istedim.</p>
+      <p>Çok güçlüsün ama güçlü olmak hiç yorulmamak demek değil. Yorulabilirsin, dinlenebilirsin, bana yaslanabilirsin. Seni olduğun gibi, yorgunken de, sessizken de seviyorum.</p>
+      <p>Ne olursa olsun, ben buradayım.</p>
+      <p class="sign">Hep senin,<br>♡</p>
+    </div>
+  </section>
+
+  <footer>İyi geceler, güzel kalbim <span class="heart">♡</span></footer>
+</main>
+
+<script>
+(function(){
+  var NAME = "Aşkım"; // ismini buraya yazabilirsin
+
+  // selamlama
+  var h = new Date().getHours();
+  var part = h<6 ? "İyi geceler" : h<12 ? "Günaydın" : h<18 ? "Merhaba" : "İyi akşamlar";
+  document.getElementById('greet').textContent = part + ", " + NAME;
+
+  // tema
+  var root = document.documentElement;
+  document.getElementById('theme').addEventListener('click', function(){
+    var dark = getComputedStyle(root).getPropertyValue('--bg1').trim() === '#1b2315';
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    stars();
+  });
+
+  // yıldızlar
+  var cv = document.getElementById('sky'), cx = cv.getContext('2d'), S = [];
+  function stars(){
+    var w = cv.width = innerWidth, hh = cv.height = innerHeight;
+    S = [];
+    for (var i=0;i<Math.min(90,w/9);i++) S.push({x:Math.random()*w,y:Math.random()*hh,r:Math.random()*1.5+.4,p:Math.random()*6});
+  }
+  function draw(t){
+    cx.clearRect(0,0,cv.width,cv.height);
+    var c = getComputedStyle(root).getPropertyValue('--star').trim();
+    cx.fillStyle = c;
+    S.forEach(function(s){
+      cx.globalAlpha = .35 + .65*Math.abs(Math.sin(t/1800 + s.p));
+      cx.beginPath(); cx.arc(s.x,s.y,s.r,0,6.283); cx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  stars(); addEventListener('resize', stars); requestAnimationFrame(draw);
+
+  // nefes
+  var orb = document.getElementById('orb'), ot = document.getElementById('orbText'),
+      bb = document.getElementById('breathBtn'), run = false, timers = [];
+  function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+  function cycle(){
+    if(!run) return;
+    orb.className = 'orb in'; ot.textContent = 'nefes al';
+    later(function(){ orb.className='orb hold'; ot.textContent='tut'; }, 4000);
+    later(function(){ orb.className='orb out'; ot.textContent='yavaşça ver'; }, 5500);
+    later(cycle, 11500);
+  }
+  bb.addEventListener('click', function(){
+    run = !run;
+    if(run){ bb.textContent = 'Dinlenmek için dur'; cycle(); }
+    else { timers.forEach(clearTimeout); timers=[]; orb.className='orb'; ot.textContent='ne güzel, aferin sana'; bb.textContent='Tekrar başlayalım'; }
+  });
+
+  // eller
+  var box = document.getElementById('hands'), you = document.getElementById('you'),
+      me = document.getElementById('me'), warm = document.getElementById('warm'),
+      said = document.getElementById('said'), hint = document.getElementById('hint'),
+      holding = false, t = 0, last = 0, shown = false;
+  var lines = ["Geliyorum…","Biraz daha…","İşte, buradayım.","Yanındayım. Hep."];
+  function set(){
+    you.style.left = (20 + 28*t) + '%';
+    me.style.left  = (80 - 28*t) + '%';
+    warm.style.opacity = t;
+    if(t>=1 && !shown){ shown = true; hint.textContent=''; said.textContent = lines[3];
+      try{ navigator.vibrate && navigator.vibrate([60,80,60]); }catch(e){} }
+    else if(t<1){ shown=false; said.textContent = t>.7?lines[2]:t>.35?lines[1]:t>.02?lines[0]:said.textContent; }
+  }
+  function loop(now){
+    var dt = Math.min(50, now-last)/1000; last = now;
+    var tgt = holding ? 1 : (t>=1 ? 1 : 0);
+    t += (tgt>t ? dt/2.2 : -dt/1.2);
+    t = Math.max(0, Math.min(1, t));
+    set(); requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(function(n){ last=n; loop(n); });
+  function down(e){ holding = true; if(e.cancelable) e.preventDefault(); }
+  function up(){ holding = false; }
+  box.addEventListener('pointerdown', down);
+  addEventListener('pointerup', up); addEventListener('pointercancel', up);
+  box.addEventListener('keydown', function(e){ if(e.key===' '||e.key==='Enter'){ holding=true; e.preventDefault(); } });
+  box.addEventListener('keyup', function(){ holding=false; });
+
+  // notlar
+  var notes = ["Bugün yetmediğini düşünüyorsan, yetmeyen sen değil, günün uzunluğu.","Sakin bir yüzün var, bunu yorgunken bile fark ediyorum.","Senin gülüşün benim için günün en iyi haberi.","Dinlenmek de bir iş, hem de en önemlilerinden.","Başardıkların seni yoruyor olabilir ama onlar gerçek.","Bu akşam sadece rahat etmeye çalış, gerisi önemsiz.","Seni tanıdığım için şanslıyım.","Çok yorulduysan hiçbir şey yapmadan da değerlisin.","Hayatımdaki en sakin yer sensin.","Bir çay yap, pencereden dışarı bak, bunu hak ediyorsun.","Yarın bir şeyler daha hafif olacak, söz veremem ama hissediyorum.","Sen ne kadar sessiz olsan da kalbim seni duyuyor."];
+  var ni = -1, nt = document.getElementById('note');
+  document.getElementById('noteBtn').addEventListener('click', function(){
+    var k; do { k = Math.floor(Math.random()*notes.length); } while(k===ni); ni = k;
+    nt.textContent = notes[k];
+  });
+
+  // yağmur
+  var ac = null, rainOn = false, rainBtn = document.getElementById('rainBtn');
+  function startRain(){
+    ac = ac || new (window.AudioContext||window.webkitAudioContext)();
+    var len = ac.sampleRate*2, buf = ac.createBuffer(1,len,ac.sampleRate), d = buf.getChannelData(0), last = 0;
+    for(var i=0;i<len;i++){ var w = Math.random()*2-1; last = (last + 0.04*w)/1.04; d[i] = last*3.5; }
+    var src = ac.createBufferSource(); src.buffer = buf; src.loop = true;
+    var f = ac.createBiquadFilter(); f.type='lowpass'; f.frequency.value = 1400;
+    var g = ac.createGain(); g.gain.value = 0.0; g.gain.linearRampToValueAtTime(0.5, ac.currentTime+2);
+    src.connect(f); f.connect(g); g.connect(ac.destination); src.start();
+    ac._rain = {src:src,g:g};
+  }
+  rainBtn.addEventListener('click', function(){
+    try{
+      rainOn = !rainOn;
+      if(rainOn){ startRain(); rainBtn.textContent='Yağmuru kapat'; }
+      else if(ac && ac._rain){ ac._rain.g.gain.linearRampToValueAtTime(0, ac.currentTime+1); var s = ac._rain.src; setTimeout(function(){ s.stop(); }, 1100); rainBtn.textContent='Yağmuru aç'; }
+      rainBtn.setAttribute('aria-pressed', rainOn);
+    }catch(e){ rainBtn.textContent='Ses bu cihazda açılamadı'; }
+  });
+
+  // mola
+  var tb = document.getElementById('timerBtn'), clk = document.getElementById('clock'), tm = document.getElementById('timerMsg'), tid = null;
+  function fmt(s){ return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  tb.addEventListener('click', function(){
+    if(tid){ clearInterval(tid); tid=null; clk.textContent='5:00'; tb.textContent='5 dakika mola'; tm.textContent=''; return; }
+    var left = 300; tb.textContent = 'Bırak'; tm.textContent = 'Gözlerini kapat. Sadece nefesine bak.'; clk.textContent = fmt(left);
+    tid = setInterval(function(){
+      left--; clk.textContent = fmt(left);
+      if(left<=0){ clearInterval(tid); tid=null; tb.textContent='Bir daha'; tm.textContent='Bitti. Biraz daha dinlenmiş gibisin, hissettin mi?'; clk.textContent='0:00'; try{ navigator.vibrate && navigator.vibrate(120); }catch(e){} }
+    },1000);
+  });
+
+  // liste
+  var boxes = document.querySelectorAll('#list input'), done = document.getElementById('done');
+  var cheers = ["","Güzel, ilk adım.","Bak, hallediyorsun.","Neredeyse tamam.","Hepsini yaptın. Seninle gurur duyuyorum ♡"];
+  function cnt(){ var n=0; boxes.forEach(function(b){ if(b.checked) n++; }); done.textContent = cheers[n]; }
+  boxes.forEach(function(b){ b.addEventListener('change', cnt); });
+})();
+</script>
+</body>
+</html>
